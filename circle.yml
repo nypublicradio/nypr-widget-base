@@ -43,9 +43,12 @@ jobs:
       - run:
           name: Version package.json
           command: |
-            git fetch --tags
+            git config user.name $CIRCLE_USERNAME
+            git config user.email $CIRCLE_USERNAME@circlemachine
+            git checkout master
+            git tag -af $CIRCLE_TAG $CIRCLE_TAG -m $CIRCLE_TAG
             npm version from-git
-            git push $CIRCLE_TAG -f
+            git push origin $CIRCLE_TAG -f
             npm publish
 
 workflows:
