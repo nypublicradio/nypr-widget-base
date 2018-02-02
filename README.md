@@ -22,7 +22,7 @@ This is a React component generated using the `nwb` library. The source is writt
 In order to publish an update, do the following:
 
 - update the changelog
-- `npm version [patch|minor|major]`
-- `npm build`. This will generate a transpiled version of the source suitable for publishing.
-- `npm publish`
+- `yarn version [patch|minor|major]`
+- `yarn build`. This will generate a transpiled version of the source suitable for publishing.
+- `yarn publish`
 - `git push origin <tag>`. Don't forget to push the tag to github so it can be annotated and tracked.
