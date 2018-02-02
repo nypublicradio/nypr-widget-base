@@ -43,6 +43,7 @@ jobs:
       - run:
           name: Version package.json
           command: |
+            git fetch --tags
             npm version from-git
             git push $CIRCLE_TAG -f
             npm publish
