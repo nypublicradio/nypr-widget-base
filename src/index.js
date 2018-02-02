@@ -14,16 +14,13 @@ export default class NyprWidgetBase extends Component {
     super(props);
     this.embed = new pym.Child({polling: 200});
     this.embed.onMessage('incoming', this.listener);
+    this.embed.sendMessage('mounted');
 
     if (window.location.search) {
       this.state = {...this.state, ...queryString.parse(window.location.search)}
     } else {
       this.state = {...this.state, ...props}
     }
-  }
-
-  componentDidMount() {
-    this.embed.sendMessage('mounted');
   }
 
   componentWillUnmount() {
