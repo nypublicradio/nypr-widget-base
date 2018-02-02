@@ -32,7 +32,7 @@ jobs:
 
 workflows:
   version: 2
-  install-test-publish:
+  install-test:
     jobs:
       - install:
           filters:
