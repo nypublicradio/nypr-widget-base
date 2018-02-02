@@ -60,7 +60,7 @@ workflows:
               only: /.*/
           requires:
             - install
-      - deploy:
+      - publish:
           requires:
             - test
           filters:
