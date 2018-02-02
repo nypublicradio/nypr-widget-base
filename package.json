@@ -1,7 +1,7 @@
 {
-  "name": "widget-base",
+  "name": "nypr-widget-base",
   "version": "1.0.0",
-  "description": "widget-base React component",
+  "description": "React base widget for NYPR engagement modules",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
