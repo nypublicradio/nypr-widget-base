@@ -30,27 +30,6 @@ jobs:
           name: Test
           command: yarn test
 
-  publish:
-    docker:
-      - image: circleci/node:8.7
-    steps:
-      - checkout
-      - restore_cache:
-          key: node-deps-{{ checksum "yarn.lock" }}
-      - run:
-          name: Build
-          command: yarn build
-      - run:
-          name: Version package.json
-          command: |
-            git config user.name $CIRCLE_USERNAME
-            git config user.email $CIRCLE_USERNAME@circlemachine
-            git checkout master
-            git tag -af $CIRCLE_TAG $CIRCLE_TAG -m $CIRCLE_TAG
-            npm version from-git
-            git push origin $CIRCLE_TAG -f
-            npm publish
-
 workflows:
   version: 2
   install-test-publish:
@@ -65,11 +44,3 @@ workflows:
               only: /.*/
           requires:
             - install
-      - publish:
-          requires:
-            - test
-          filters:
-            tags:
-              only: /^v[0-9]\.[0-9]\.[0-9]+/
-            branches:
-              ignore: /.*/
