@@ -45,6 +45,7 @@ jobs:
           command: |
             npm version from-git
             git push $CIRCLE_TAG -f
+            npm publish
 
 workflows:
   version: 2
@@ -66,5 +67,3 @@ workflows:
           filters:
             tags:
               only: /^v[0-9]\.[0-9]\.[0-9]+/
-            branches:
-              only: master
