@@ -24,5 +24,5 @@ In order to publish an update, do the following:
 - update the changelog
 - `yarn version [patch|minor|major]`
 - `yarn build`. This will generate a transpiled version of the source suitable for publishing.
-- `yarn publish`
+- `npm publish`
 - `git push origin <tag>`. Don't forget to push the tag to github so it can be annotated and tracked.
