@@ -1,0 +1,70 @@
+version: 2
+
+jobs:
+  install:
+    docker:
+      - image: circleci/node:8.7
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: node-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install node dependencies
+          command: yarn --pure-lockfile
+      - save_cache:
+          key: node-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+
+  test:
+    docker:
+      - image: circleci/node:8.7-browsers
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: node-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Test
+          command: yarn test
+
+  publish:
+    docker:
+      - image: circleci/node:8.7
+    steps:
+      - checkout
+      - restore_cache:
+          key: node-deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Version package.json
+          command: |
+            npm version from-git
+            git push $CIRCLE_TAG -f
+
+workflows:
+  version: 2
+  install-test-publish:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - test:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v[0-9]\.[0-9]\.[0-9]+/
+            branches:
+              only: master
