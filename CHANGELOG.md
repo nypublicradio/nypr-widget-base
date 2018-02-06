@@ -1,5 +1,8 @@
 # `nypr-widget-base` Changelog
 
+## `v1.0.7`
+- [CHORE] fix build
+
 ## `v1.0.6`
 - [BUGFIX] Only update brand at boot time if there's a given brand
 
