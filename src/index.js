@@ -18,6 +18,7 @@ export default class NyprWidgetBase extends Component {
 
     if (window.location.search) {
       this.state = {...this.state, ...queryString.parse(window.location.search)}
+      this.updateBrand();
     } else {
       this.state = {...this.state, ...props}
     }
