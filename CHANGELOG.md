@@ -1,5 +1,8 @@
 # `nypr-widget-base` Changelog
 
+## `v1.0.6`
+- [BUGFIX] Only update brand at boot time if there's a given brand
+
 ## `v1.0.5`
 - [BUGFIX] Update brand on initial render if it's passed in
 - [CHORE] Don't build a demo app
