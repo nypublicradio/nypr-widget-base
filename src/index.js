@@ -7,13 +7,19 @@ const THEMES = process.env.REACT_APP_THEMES;
 
 export default class NyprWidgetBase extends Component {
   state = {
+    // styles are pullled in from the themes endpoint as a JSON object
+    // and applied as dynamic inline css
     styles: {}
   }
 
   constructor(props) {
     super(props);
+    // pym manages communication via iframe so the toolkit site users can make
+    // real time configuration changes
     this.embed = new pym.Child({polling: 200});
     this.embed.onMessage('incoming', this.listener);
+
+    // the toolkit waits for the `mounted` message before attempting to communicate
     this.embed.sendMessage('mounted');
 
     if (window.location.search) {
@@ -42,6 +48,16 @@ export default class NyprWidgetBase extends Component {
       .then(styles => this.setState({styles}));
   }
 
+  // search for the value at the given keypath on our local styles object
+  // e.g. an object like this:
+  // {
+  //   button: {
+  //     color: "black",
+  //     padding: "12px 18px"
+  //   }
+  // }
+  // style("button") -> { color: "black", padding: "12px 18px" }
+  // style("button.color") -> { color: "black" }
   style(path) {
     let parts = path.split('.');
     if (parts.length === 1) {
@@ -54,6 +70,8 @@ export default class NyprWidgetBase extends Component {
     }
   }
 
+  // postMessage sends/receives as strings
+  // JSONify whatever comes in
   parse(data) {
     let message = {};
     if (typeof data === 'string') {
@@ -69,6 +87,7 @@ export default class NyprWidgetBase extends Component {
     this.setState(query);
   }
 
+  // concrete classes implement render
   render() {
     return null;
   }
